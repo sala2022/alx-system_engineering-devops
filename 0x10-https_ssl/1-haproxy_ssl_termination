@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+frontend saloua_fronend_https
+        bind *:80
+        bind *:443 ssl crt /etc/haproxy/certs/www.salouakasmibakkali.tech.pem
+        redirect scheme https code 301 if !{ ssl_fc }
+        default_backend saloua_backend
+
+backend saloua_backend
+        balance roundrobin
+        server 371392-web-01 54.146.56.232:80 check
+        server 371392-web-02 34.207.58.85:80 check
